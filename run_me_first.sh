@@ -22,7 +22,7 @@ for FILE in ${DOTFILES[@]}; do
     fi
 done
 
-SCRIPTS=(gis gl)
+SCRIPTS=(gis gl gd)
 for SCRIPT in ${SCRIPTS[@]}; do
     if [[  -L "$HOME/.bin/${SCRIPT}" ]]; then
         echo "symlink for ${SCRIPT} is already present. nothing to do."
