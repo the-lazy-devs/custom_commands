@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# TODO:
-# DONE - check for ~/.bin directory; create if not present
-# DONE - update ~/.bashrc and ~/.bash_profile
-# - loop over scripts, creating links
-
 if [[ -d "$HOME/.bin" ]]; then
     echo "$HOME/.bin already exists. nothing to do"
 else
