@@ -28,11 +28,17 @@ function create_symlinks () {
             echo "symlink for ${SCRIPT} is already present. nothing to do."
         else
             echo "creating a symlink for ${SCRIPT}"
-            ln -s "$HOME/.custom_git/${SCRIPT}.sh" "$HOME/.bin/${SCRIPT}"
+            ln -s "$HOME/.custom_commands/${SCRIPT}.sh" "$HOME/.bin/${SCRIPT}"
         fi
     done
+}
+
+function update_alias_sourcing () {
+    echo 'adding the aliases to .bash_profile'
+    echo 'source $HOME/.custom_commands/alias_admin_commands.sh'  >> "$HOME/.bash_profile"
 }
 
 create_bin_directory
 update_path_variable
 create_symlinks
+update_alias_sourcing
