@@ -39,13 +39,23 @@ function create_symlinks () {
 
 function update_alias_sourcing () {
     local SCRIPT_DIR_LOCATION=$1
-    echo 'adding the aliases to .bash_profile'
-    echo "source $SCRIPT_DIR_LOCATION/alias_admin_commands.sh" >> "$HOME/.bash_profile"
+    local PROFILE_FILE_LOCATION=$2
+
+    local SCRIPTS=( "$SCRIPT_DIR_LOCATION/aliases"/*.sh )
+    for SCRIPT in ${SCRIPTS[@]}; do
+        if grep -q "source $SCRIPT" "$PROFILE_FILE_LOCATION"; then
+            echo "${SCRIPT} has already been sourced. nothing to do."
+        else
+            echo "adding the aliases from $SCRIPT to .bash_profile"
+            echo "source $SCRIPT" >> $PROFILE_FILE_LOCATION
+        fi
+    done
 }
 
 SCRIPT_DIR_LOCATION="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
+PROFILE_FILE_LOCATION=$HOME/.bash_profile
 
 create_bin_directory
 update_path_variable
 create_symlinks $SCRIPT_DIR_LOCATION
-update_alias_sourcing $SCRIPT_DIR_LOCATION
+update_alias_sourcing $SCRIPT_DIR_LOCATION $PROFILE_FILE_LOCATION
