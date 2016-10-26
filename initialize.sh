@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 function create_bin_directory () {
     if [[ -d "$HOME/.bin" ]]; then
@@ -10,15 +10,13 @@ function create_bin_directory () {
 }
 
 function update_path_variable () {
-    DOTFILES=(.bash_profile .bashrc)
-    for FILE in ${DOTFILES[@]}; do
-        if grep -q '$HOME/.bin' "$HOME/$FILE" ; then
-            echo "$HOME/.bin is added to the PATH variable in $FILE already. nothing to do".
-        else
-            echo "updating ~/$FILE to add $HOME/.bin to the PATH variable"
-            echo 'export PATH="$PATH:$HOME/.bin"' >> "$HOME/$FILE"
-        fi
-    done
+    FILE=$1
+    if grep -q '$HOME/.bin' "$FILE" ; then
+        echo "$HOME/.bin is added to the PATH variable in ${FILE##*/} already. nothing to do".
+    else
+        echo "updating $FILE to add $HOME/.bin to the PATH variable"
+        echo 'export PATH="$PATH:$HOME/.bin"' >> "$FILE"
+    fi
 }
 
 function create_symlinks () {
@@ -40,22 +38,23 @@ function create_symlinks () {
 function update_alias_sourcing () {
     local SCRIPT_DIR_LOCATION=$1
     local PROFILE_FILE_LOCATION=$2
+    local PROFILE_FILE_NAME=${2##*/}
 
     local SCRIPTS=( "$SCRIPT_DIR_LOCATION/aliases"/*.sh )
     for SCRIPT in ${SCRIPTS[@]}; do
         if grep -q "source $SCRIPT" "$PROFILE_FILE_LOCATION"; then
-            echo "${SCRIPT} has already been sourced. nothing to do."
+            echo "${SCRIPT} has already been sourced in $PROFILE_FILE_NAME. nothing to do."
         else
-            echo "adding the aliases from $SCRIPT to .bash_profile"
+            echo "adding the aliases from $SCRIPT to $PROFILE_FILE_NAME"
             echo "source $SCRIPT" >> $PROFILE_FILE_LOCATION
         fi
     done
 }
 
 SCRIPT_DIR_LOCATION="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
-PROFILE_FILE_LOCATION=$HOME/.bash_profile
+PROFILE_FILE_LOCATION=${1:-$HOME/.bash_profile}
 
 create_bin_directory
-update_path_variable
+update_path_variable $PROFILE_FILE_LOCATION
 create_symlinks $SCRIPT_DIR_LOCATION
 update_alias_sourcing $SCRIPT_DIR_LOCATION $PROFILE_FILE_LOCATION
