@@ -4,5 +4,4 @@ This project is where I keep some of my custom commands.  They're shortcuts for 
 
 To use this project
 -------------------
-clone the repository to your users home directory.  run the command: `./initialize.sh`
-
+clone the repository and run the command: `./initialize.sh`
