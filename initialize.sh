@@ -42,10 +42,11 @@ function update_alias_sourcing () {
 
     local SCRIPTS=( "$SCRIPT_DIR_LOCATION/aliases"/*.sh )
     for SCRIPT in ${SCRIPTS[@]}; do
+        local SCRIPT_NAME=${SCRIPT##*/}
         if grep -q "source $SCRIPT" "$PROFILE_FILE_LOCATION"; then
-            echo "[No action] ${SCRIPT##*/} has already been sourced in $PROFILE_FILE_NAME"
+            echo "[No action] $SCRIPT_NAME has already been sourced in $PROFILE_FILE_NAME"
         else
-            echo "adding the aliases from $SCRIPT to $PROFILE_FILE_NAME"
+            echo "adding the aliases from $SCRIPT_NAME to $PROFILE_FILE_NAME"
             echo "source $SCRIPT" >> $PROFILE_FILE_LOCATION
         fi
     done
