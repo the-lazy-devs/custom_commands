@@ -40,7 +40,8 @@ function update_alias_sourcing () {
     echo "source $SCRIPT_DIR_LOCATION/alias_admin_commands.sh" >> "$HOME/.bash_profile"
 }
 
-SCRIPT_DIR_LOCATION=$HOME/.custom_commands
+SCRIPT_DIR_LOCATION="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
+
 create_bin_directory
 update_path_variable
 create_symlinks $SCRIPT_DIR_LOCATION
