@@ -22,20 +22,23 @@ function update_path_variable () {
 }
 
 function create_symlinks () {
-    SCRIPT_DIR_LOCATION=$1
-    SCRIPTS=(gis gl gd)
-    for SCRIPT in ${SCRIPTS[@]}; do
+    local SCRIPT_DIR_LOCATION=$1
+    local SCRIPTS=( "$SCRIPT_DIR_LOCATION/commands"/*.sh )
+    for FULL_SCRIPT_NAME in ${SCRIPTS[@]}; do
+        local SCRIPT_FILE_NAME=${FULL_SCRIPT_NAME##*/}
+        local SCRIPT=${SCRIPT_FILE_NAME%.*}
+
         if [[  -L "$HOME/.bin/${SCRIPT}" ]]; then
             echo "symlink for ${SCRIPT} is already present. nothing to do."
         else
-            echo "creating a symlink for ${SCRIPT}"
-            ln -s "$SCRIPT_DIR_LOCATION/${SCRIPT}.sh" "$HOME/.bin/${SCRIPT}"
+            echo "creating a symlink for $SCRIPT"
+            ln -s "$SCRIPT_DIR_LOCATION/commands/$SCRIPT_FILE_NAME" "$HOME/.bin/$SCRIPT"
         fi
     done
 }
 
 function update_alias_sourcing () {
-    SCRIPT_DIR_LOCATION=$1
+    local SCRIPT_DIR_LOCATION=$1
     echo 'adding the aliases to .bash_profile'
     echo "source $SCRIPT_DIR_LOCATION/alias_admin_commands.sh" >> "$HOME/.bash_profile"
 }
