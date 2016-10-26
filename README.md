@@ -9,3 +9,6 @@ This file is `~/.bash_profile` by default.
 
 If you're using bash and you would like this file updated, run `./initialize.sh`.
 If you're using zsh, you should run `./initialize.sh ~/.zshrc`.
+
+Script will ensure that no changes are made to files unless required.
+![execution output](https://cloud.githubusercontent.com/assets/911203/19718088/7665f90c-9b81-11e6-8fd8-3fbd815e583b.png)
