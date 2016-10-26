@@ -2,7 +2,7 @@
 
 function create_bin_directory () {
     if [[ -d "$HOME/.bin" ]]; then
-        echo "$HOME/.bin already exists. nothing to do"
+        echo "[No action] $HOME/.bin already exists"
     else
         echo "creating $HOME/.bin"
         mkdir $HOME/.bin
@@ -12,7 +12,7 @@ function create_bin_directory () {
 function update_path_variable () {
     FILE=$1
     if grep -q '$HOME/.bin' "$FILE" ; then
-        echo "$HOME/.bin is added to the PATH variable in ${FILE##*/} already. nothing to do".
+        echo "[No action] $HOME/.bin is added to the PATH variable in ${FILE##*/} already"
     else
         echo "updating $FILE to add $HOME/.bin to the PATH variable"
         echo 'export PATH="$PATH:$HOME/.bin"' >> "$FILE"
@@ -27,7 +27,7 @@ function create_symlinks () {
         local SCRIPT=${SCRIPT_FILE_NAME%.*}
 
         if [[  -L "$HOME/.bin/${SCRIPT}" ]]; then
-            echo "symlink for ${SCRIPT} is already present. nothing to do."
+            echo "[No action] symlink for ${SCRIPT} is already present"
         else
             echo "creating a symlink for $SCRIPT"
             ln -s "$SCRIPT_DIR_LOCATION/commands/$SCRIPT_FILE_NAME" "$HOME/.bin/$SCRIPT"
@@ -43,7 +43,7 @@ function update_alias_sourcing () {
     local SCRIPTS=( "$SCRIPT_DIR_LOCATION/aliases"/*.sh )
     for SCRIPT in ${SCRIPTS[@]}; do
         if grep -q "source $SCRIPT" "$PROFILE_FILE_LOCATION"; then
-            echo "${SCRIPT} has already been sourced in $PROFILE_FILE_NAME. nothing to do."
+            echo "[No action] ${SCRIPT##*/} has already been sourced in $PROFILE_FILE_NAME"
         else
             echo "adding the aliases from $SCRIPT to $PROFILE_FILE_NAME"
             echo "source $SCRIPT" >> $PROFILE_FILE_LOCATION
