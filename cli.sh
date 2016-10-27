@@ -17,7 +17,7 @@ function print_help() {
 Install custom commands and aliases into shell profile files
 
     -d, --dry-run               don't change anything, show what would be done.
-    -h                          display this help and exit
+    -h, --help                  display this help and exit
     -p, --profile PROFILE_FILE  shell profile file to be updated
                                   Default: $HOME/.bash_profile
     -r, --rc STARTUP_FILE       shell startup file to be updated
@@ -35,7 +35,9 @@ Usage: $0 [-h|--help][-d|--dry-run][-p|--profile path_to_profile_file][-r|--rc p
 EOU
 }
 
-while getopts ":p:r:hd" opt; do
+while getopts ":-:" opt; do
+  [[ - == $opt ]] && opt=${OPTARG%%=*} OPTARG=${OPTARG%*=}
+
   case $opt in
     p | profile)
       check_invalid_args $opt $OPTARG
