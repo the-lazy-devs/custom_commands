@@ -12,11 +12,11 @@ fi
 SCRIPT_DIR_LOCATION="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
 
 if [ "$DRY_RUN" = true ]; then
-  echo "Executing in dry run mode. No changes will be made."
+  echo "${PGREEN}Executing in dry run mode. No changes will be made.${PRESET}"
 
   if [ "$QUIET" = true ]; then
     QUIET=false
-    echo "Quiet mode was switched off since dry-run was enabled"
+    echo "${PYELLOW}Quiet mode was switched off since dry-run was enabled${PRESET}"
   fi
 
   echo

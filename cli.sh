@@ -1,68 +1,88 @@
 #!/bin/sh
 
-function check_invalid_args() {
-  local arg=$1
-  local value=$2
+function setup_colors() {
+  PBLACK=$(tput setaf 0)
+  PRED=$(tput setaf 1)
+  PGREEN=$(tput setaf 2)
+  PYELLOW=$(tput setaf 3)
+  PBLUE=$(tput setaf 4)
+  PMAGENTA=$(tput setaf 5)
+  PCYAN=$(tput setaf 6)
+  PWHITE=$(tput setaf 7)
+  PREV=$(tput rev)
+  PBOLD=$(tput bold)
+  PRESET=$(tput sgr0)
+}
 
-  if [[ "$value" =~ ^-[a-z] ]]; then
-    echo "Option -$arg cannot accept value \"$value\""
-    exit 1
-  fi
+function unset_colors() {
+  PBLACK=$(tput sgr0)
+  PRED=$(tput sgr0)
+  PGREEN=$(tput sgr0)
+  PYELLOW=$(tput sgr0)
+  PBLUE=$(tput sgr0)
+  PMAGENTA=$(tput sgr0)
+  PCYAN=$(tput sgr0)
+  PWHITE=$(tput sgr0)
+  PREV=$(tput sgr0)
+  PBOLD=$(tput sgr0)
+  PRESET=$(tput sgr0)
 }
 
 function print_help() {
   print_usage
   cat <<EOH
 
-Install custom commands and aliases into shell profile files
+${PCYAN}Install custom commands and aliases into shell profile files${PRESET}
 
-    -d, --dry-run               don't change anything, show what would be done.
-    -h, --help                  display this help and exit
-    -p, --profile PROFILE_FILE  shell profile file to be updated
-                                  Default: $HOME/.bash_profile
-    -q, --quiet                 switches off all output
-    -r, --rc STARTUP_FILE       shell startup file to be updated
-                                  Default: $HOME/.bashrc
+    ${PGREEN}-c${PRESET}, ${PGREEN}--no-color              ${PBLUE}strip color out of the output
+    ${PGREEN}-d${PRESET}, ${PGREEN}--dry-run               ${PBLUE}don't change anything, show what would be done.
+    ${PGREEN}-h${PRESET}, ${PGREEN}--help                  ${PBLUE}display this help and exit
+    ${PGREEN}-p${PRESET}, ${PGREEN}--profile ${PYELLOW}PROFILE_FILE  ${PBLUE}shell profile file to be updated
+                                  Default: $HOME/.bash_profile${PRESET}
+    ${PGREEN}-q${PRESET}, ${PGREEN}--quiet                 ${PBLUE}switches off all output
+    ${PGREEN}-r${PRESET}, ${PGREEN}--rc ${PYELLOW}STARTUP_FILE       ${PBLUE}shell startup file to be updated
+                                  Default: $HOME/.bashrc${PRESET}
 
-Recommended commands:
-    For bash users: ./${0##*/}
-    For zsh users:  ./${0##*/} -p ~/.zshrc -r ~/.zshrc
+${PBOLD}Recommended commands${PRESET}:
+    ${PCYAN}For bash users${PRESET}: ${PMAGENTA}./${0##*/}${PRESET}
+    ${PCYAN}For zsh users${PRESET}:  ${PMAGENTA}./${0##*/} ${PGREEN}-p ${PYELLOW}~/.zshrc ${PGREEN}-r ${PYELLOW}~/.zshrc${PRESET}
 EOH
 }
 
 function print_usage() {
   cat <<EOU
-Usage: $0 [-h|--help][-d|--dry-run][-q|--quiet-mode][-p|--profile path_to_profile_file][-r|--rc path_to_startup_file]
+${PBOLD}Usage${PRESET}: ${PMAGENTA}$0 ${PRESET}[${PRESET}${PGREEN}-c${PRESET}|${PGREEN}--no-color${PRESET}${PBOLD}][${PRESET}${PGREEN}-d${PRESET}|${PGREEN}--dry-run${PRESET}][${PRESET}${PGREEN}-h${PRESET}|${PGREEN}--help${PRESET}][${PRESET}${PGREEN}-p${PRESET}|${PGREEN}--profile ${PYELLOW}file${PRESET}][${PRESET}${PGREEN}-q${PRESET}|${PGREEN}--quiet-mode${PRESET}][${PRESET}${PGREEN}-r${PRESET}|${PGREEN}--rc ${PYELLOW}file${PRESET}]
 EOU
 }
+
+setup_colors
 
 while getopts ":-:" opt; do
   [[ - == $opt ]] && opt=${OPTARG%%=*} OPTARG=${OPTARG%*=}
 
   case $opt in
-    p | profile)
-      check_invalid_args $opt $OPTARG
-      PROFILE_FILE_LOCATION=$OPTARG
-      ;;
-    r | rc)
-      check_invalid_args $opt $OPTARG
-      RC_FILE_LOCATION=$OPTARG
-      ;;
+    c | no-color) NO_COLOR=true ;;
+    d | dry-run) DRY_RUN=true ;;
     h | help)
       print_help
       exit 0
       ;;
-    d | dry-run) DRY_RUN=true ;;
+    p | profile)
+      PROFILE_FILE_LOCATION=$OPTARG
+      ;;
     q | quiet) QUIET=true ;;
+    r | rc)
+      RC_FILE_LOCATION=$OPTARG
+      ;;
     \?)
       ARG_NUM=$(($OPTIND - 1))
-      echo "Unknown argument ${!ARG_NUM}"
+      echo "${PRED}Unknown argument ${!ARG_NUM}${PRESET}"
       echo
       print_usage
       exit 2
       ;;
     :)
-      echo "Expected value for argument -$OPTARG"
+      echo "${PRED}Expected value for argument -$OPTARG${PRESET}"
       echo
       print_usage
       exit 1
@@ -74,7 +94,12 @@ shift $((OPTIND - 1))
 case $# in
   0) ;;
   *)
+    echo "${PRED}Unknown arguments [${*}] found${PRESET}"
     print_usage >&2
-    exit 2
+    exit 3
     ;;
 esac
+
+if [[ "$NO_COLOR" = true ]]; then
+  unset_colors
+fi

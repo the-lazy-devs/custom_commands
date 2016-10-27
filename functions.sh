@@ -2,12 +2,12 @@
 
 function create_bin_directory() {
   if [[ -d "$HOME/.bin" ]]; then
-    print "[No action] $HOME/.bin already exists"
+    print "${PYELLOW}${PBOLD}[No action]${PRESET}${PYELLOW} $HOME/.bin already exists${PRESET}"
   else
     if [ "$DRY_RUN" = true ]; then
-      print "Would create $HOME/.bin"
+      print "${PYELLOW}Would create $HOME/.bin${PRESET}"
     else
-      print "Creating $HOME/.bin"
+      print "${PGREEN}Creating $HOME/.bin${PRESET}"
       mkdir $HOME/.bin
     fi
   fi
@@ -19,12 +19,12 @@ function update_path_variable() {
   local DOT_FILES=("${@}")
   for DOT_FILE in ${DOT_FILES[@]}; do
     if grep -sq '$HOME/.bin' "$DOT_FILE"; then
-      print "[No action] $HOME/.bin is added to the PATH variable in ${DOT_FILE##*/} already"
+      print "${PYELLOW}${PBOLD}[No action]${PRESET}${PYELLOW} $HOME/.bin is added to the PATH variable in ${DOT_FILE##*/} already${PRESET}"
     else
       if [ "$DRY_RUN" = true ]; then
-        print "Would update $DOT_FILE to add $HOME/.bin to the PATH variable"
+        print "${PYELLOW}Would update $DOT_FILE to add $HOME/.bin to the PATH variable${PRESET}"
       else
-        print "Updating $DOT_FILE to add $HOME/.bin to the PATH variable"
+        print "${PGREEN}Updating $DOT_FILE to add $HOME/.bin to the PATH variable${PRESET}"
         echo 'export PATH="$PATH:$HOME/.bin"' >>"$DOT_FILE"
       fi
     fi
@@ -42,12 +42,12 @@ function create_symlinks() {
     local SCRIPT=${SCRIPT_FILE_NAME%.*}
 
     if [[ -L "$HOME/.bin/${SCRIPT}" ]]; then
-      print "[No action] symlink for ${SCRIPT} is already present"
+      print "${PYELLOW}${PBOLD}[No action]${PRESET}${PYELLOW} symlink for ${SCRIPT} is already present${PRESET}"
     else
       if [ "$DRY_RUN" = true ]; then
-        print "Would create a symlink for $SCRIPT"
+        print "${PYELLOW}Would create a symlink for $SCRIPT${PRESET}"
       else
-        print "Creating a symlink for $SCRIPT"
+        print "${PGREEN}Creating a symlink for $SCRIPT${PRESET}"
         ln -s "$SCRIPT_DIR_LOCATION/commands/$SCRIPT_FILE_NAME" "$HOME/.bin/$SCRIPT"
       fi
     fi
@@ -66,12 +66,12 @@ function update_alias_sourcing() {
     local PROFILE_FILE_NAME=${PROFILE_FILE_LOCATION##*/}
 
     if grep -sq "source $SCRIPT" "$PROFILE_FILE_LOCATION"; then
-      print "[No action] $SCRIPT_NAME has already been sourced in $PROFILE_FILE_NAME"
+      print "${PYELLOW}${PBOLD}[No action]${PRESET}${PYELLOW} $SCRIPT_NAME has already been sourced in $PROFILE_FILE_NAME${PRESET}"
     else
       if [ "$DRY_RUN" = true ]; then
-        print "Would add the aliases from $SCRIPT_NAME to $PROFILE_FILE_NAME"
+        print "${PYELLOW}Would add the aliases from $SCRIPT_NAME to $PROFILE_FILE_NAME${PRESET}"
       else
-        print "Adding the aliases from $SCRIPT_NAME to $PROFILE_FILE_NAME"
+        print "${PGREEN}Adding the aliases from $SCRIPT_NAME to $PROFILE_FILE_NAME${PRESET}"
         echo "source $SCRIPT" >> $PROFILE_FILE_LOCATION
       fi
     fi
