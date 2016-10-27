@@ -18,18 +18,26 @@ Script will ensure that no changes are made to files unless required.
 Removal
 -------------------
 
-1. Remove the `~/.bin` directory
+The following are the instructions for bash (default program execution). If you installed the commands and aliases into different files, update the commands accordingly.
 
-**WARNING** You may have content other than what this script installed in this directory
-```
-rm -rf ~/.bin
-```
-
-2. Find aliases that were added to your profile. Assuming you installed your aliases into `.zshrc`
-```
-grep ".custom_commands/aliases" ~/.zshrc
-```
-
+1. Remove the `~/.bin` directory (`rm -rf ~/.bin`). **WARNING** You may have content other than what this script installed in this directory
+2. Find aliases that were added to your profile. Assuming you installed your aliases into `~/.bash_profile`, run `grep ".custom_commands/aliases" ~/.bash_profile`
 3. Remove content from #2 from profile using your favourite editor
-
 4. Remove the PATH export from the same profile file
+5. Remove the PATH export from your shell startup file (`~/.bashrc`)
+
+Installed Shortcuts
+-------------------
+
+| Shortcut   | Full Command  | Type  |
+|:-:|:-:|:-:|
+| `gd` | `git diff .` | command |
+| `gis` | `git status` | command |
+| `gl` | `git log --oneline` | command |
+| `name` | `uname -a` | alias |
+| `present` | `echo "today is $(date)"` | alias |
+
+**Note**:
+
+* Shortcuts are sym-linked as shell scripts in `~/.bin`
+* Aliases are sourced in your profile file
