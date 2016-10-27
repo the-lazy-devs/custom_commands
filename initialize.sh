@@ -11,7 +11,7 @@ fi
 
 SCRIPT_DIR_LOCATION="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
 
-if $DRY_RUN; then
+if [ "$DRY_RUN" = true ]; then
   echo "Executing in dry run mode. No changes will be made."
   echo
 fi

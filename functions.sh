@@ -4,7 +4,7 @@ function create_bin_directory() {
   if [[ -d "$HOME/.bin" ]]; then
     echo "[No action] $HOME/.bin already exists"
   else
-    if [ $DRY_RUN ]; then
+    if [ "$DRY_RUN" = true ]; then
       echo "Would create $HOME/.bin"
     else
       echo "Creating $HOME/.bin"
@@ -21,7 +21,7 @@ function update_path_variable() {
     if grep -sq '$HOME/.bin' "$DOT_FILE"; then
       echo "[No action] $HOME/.bin is added to the PATH variable in ${DOT_FILE##*/} already"
     else
-      if [ $DRY_RUN ]; then
+      if [ "$DRY_RUN" = true ]; then
         echo "Would update $DOT_FILE to add $HOME/.bin to the PATH variable"
       else
         echo "Updating $DOT_FILE to add $HOME/.bin to the PATH variable"
@@ -44,7 +44,7 @@ function create_symlinks() {
     if [[ -L "$HOME/.bin/${SCRIPT}" ]]; then
       echo "[No action] symlink for ${SCRIPT} is already present"
     else
-      if [ $DRY_RUN ]; then
+      if [ "$DRY_RUN" = true ]; then
         echo "Would create a symlink for $SCRIPT"
       else
         echo "Creating a symlink for $SCRIPT"
@@ -68,7 +68,7 @@ function update_alias_sourcing() {
     if grep -sq "source $SCRIPT" "$PROFILE_FILE_LOCATION"; then
       echo "[No action] $SCRIPT_NAME has already been sourced in $PROFILE_FILE_NAME"
     else
-      if [ $DRY_RUN ]; then
+      if [ "$DRY_RUN" = true ]; then
         echo "Would add the aliases from $SCRIPT_NAME to $PROFILE_FILE_NAME"
       else
         echo "Adding the aliases from $SCRIPT_NAME to $PROFILE_FILE_NAME"
