@@ -16,6 +16,7 @@ function print_help() {
 
 Install custom commands and aliases into shell profile files
 
+    -d, --dry-run               don't change anything, show what would be done.
     -h                          display this help and exit
     -p, --profile PROFILE_FILE  shell profile file to be updated
                                   Default: $HOME/.bash_profile
