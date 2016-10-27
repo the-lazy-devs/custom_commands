@@ -20,6 +20,7 @@ Install custom commands and aliases into shell profile files
     -h, --help                  display this help and exit
     -p, --profile PROFILE_FILE  shell profile file to be updated
                                   Default: $HOME/.bash_profile
+    -q, --quiet                 switches off all output
     -r, --rc STARTUP_FILE       shell startup file to be updated
                                   Default: $HOME/.bashrc
 
@@ -31,7 +32,7 @@ EOH
 
 function print_usage() {
   cat <<EOU
-Usage: $0 [-h|--help][-d|--dry-run][-p|--profile path_to_profile_file][-r|--rc path_to_startup_file]
+Usage: $0 [-h|--help][-d|--dry-run][-q|--quiet-mode][-p|--profile path_to_profile_file][-r|--rc path_to_startup_file]
 EOU
 }
 
@@ -52,6 +53,7 @@ while getopts ":-:" opt; do
       exit 0
       ;;
     d | dry-run) DRY_RUN=true ;;
+    q | quiet) QUIET=true ;;
     \?)
       ARG_NUM=$(($OPTIND - 1))
       echo "Unknown argument ${!ARG_NUM}"
