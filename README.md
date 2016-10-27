@@ -4,11 +4,13 @@ This project is where I keep some of my custom commands.  They're shortcuts for 
 
 Usage
 -------------------
-The project adds aliases to be sourced and updates the path in a file loaded by your shell.
-This file is `~/.bash_profile` by default.
+The project adds aliases to be sourced and updates the path in a file(s) loaded by your shell.
+By default, the `~/.bash_profile` and `~/.bashrc` are updated.
 
 If you're using bash and you would like this file updated, run `./initialize.sh`.
-If you're using zsh, you should run `./initialize.sh ~/.zshrc`.
+If you're using zsh, you should run `./initialize.sh -p ~/.zshrc -r ~/.zshrc`.
+
+For help, run `./initialize.sh -h`
 
 Script will ensure that no changes are made to files unless required.
 ![execution output](https://cloud.githubusercontent.com/assets/911203/19718088/7665f90c-9b81-11e6-8fd8-3fbd815e583b.png)
