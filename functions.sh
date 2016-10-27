@@ -18,7 +18,7 @@ function create_bin_directory() {
 function update_path_variable() {
   local DOT_FILES=("${@}")
   for DOT_FILE in ${DOT_FILES[@]}; do
-    if grep -q '$HOME/.bin' "$DOT_FILE"; then
+    if grep -sq '$HOME/.bin' "$DOT_FILE"; then
       echo "[No action] $HOME/.bin is added to the PATH variable in ${DOT_FILE##*/} already"
     else
       if [ $DRY_RUN ]; then
@@ -65,7 +65,7 @@ function update_alias_sourcing() {
     local SCRIPT_NAME=${SCRIPT##*/}
     local PROFILE_FILE_NAME=${PROFILE_FILE_LOCATION##*/}
 
-    if grep -q "source $SCRIPT" "$PROFILE_FILE_LOCATION"; then
+    if grep -sq "source $SCRIPT" "$PROFILE_FILE_LOCATION"; then
       echo "[No action] $SCRIPT_NAME has already been sourced in $PROFILE_FILE_NAME"
     else
       if [ $DRY_RUN ]; then
