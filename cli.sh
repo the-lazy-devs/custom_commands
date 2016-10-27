@@ -57,7 +57,7 @@ EOU
 
 setup_colors
 
-while getopts ":-:" opt; do
+while getopts ":cdhp:qr:-" opt; do
   [[ - == $opt ]] && opt=${OPTARG%%=*} OPTARG=${OPTARG%*=}
 
   case $opt in
