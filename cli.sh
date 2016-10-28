@@ -57,10 +57,10 @@ EOU
 
 setup_colors
 
-while getopts ":cdhp:qr:-" opt; do
-  [[ - == $opt ]] && opt=${OPTARG%%=*} OPTARG=${OPTARG%*=}
+while getopts ":cdhp:qr:-:" OPT; do
+  [[ - == $OPT ]] && OPT=${OPTARG%%=*} OPTARG=${OPTARG#*=}
 
-  case $opt in
+  case $OPT in
     c | no-color) NO_COLOR=true ;;
     d | dry-run) DRY_RUN=true ;;
     h | help)
