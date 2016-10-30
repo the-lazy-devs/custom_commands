@@ -36,7 +36,9 @@ function update_path_variable() {
 function create_symlinks() {
   local SCRIPT_DIR_LOCATION=$1
 
+  shopt -s nullglob
   local SCRIPTS=("$SCRIPT_DIR_LOCATION/commands"/*.sh)
+  shopt -u nullglob
   for FULL_SCRIPT_NAME in ${SCRIPTS[@]}; do
     local SCRIPT_FILE_NAME=${FULL_SCRIPT_NAME##*/}
     local SCRIPT=${SCRIPT_FILE_NAME%.*}
@@ -53,6 +55,10 @@ function create_symlinks() {
     fi
   done
 
+  if [[ -z ${SCRIPTS[@]} ]]; then
+    print "[${PBOLD}Warning$PRESET]$PYELLOW No commands found$PRESET"
+  fi
+
   print
 }
 
@@ -60,7 +66,9 @@ function update_alias_sourcing() {
   local SCRIPT_DIR_LOCATION=$1
   local PROFILE_FILE_LOCATION=$2
 
+  shopt -s nullglob
   local SCRIPTS=("$SCRIPT_DIR_LOCATION/aliases"/*.sh)
+  shopt -u nullglob
   for SCRIPT in ${SCRIPTS[@]}; do
     local SCRIPT_NAME=${SCRIPT##*/}
     local PROFILE_FILE_NAME=${PROFILE_FILE_LOCATION##*/}
@@ -76,6 +84,10 @@ function update_alias_sourcing() {
       fi
     fi
   done
+
+  if [[ -z ${SCRIPTS[@]} ]]; then
+    print "[${PBOLD}Warning$PRESET]$PYELLOW No aliases found$PRESET"
+  fi
 
   print
 }
