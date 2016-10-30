@@ -26,17 +26,6 @@ The following are the instructions for bash (default program execution). If you 
 4. Remove the PATH export from the same profile file
 5. Remove the PATH export from your shell startup file (`~/.bashrc`)
 
-Installed Shortcuts
--------------------
-
-| Shortcut   | Full Command  | Type  |
-|:-:|:-:|:-:|
-| `gd` | `git diff .` | command |
-| `gis` | `git status` | command |
-| `gl` | `git log --oneline` | command |
-| `name` | `uname -a` | alias |
-| `present` | `echo "today is $(date)"` | alias |
-
 **Note**:
 
 * Shortcuts are sym-linked as shell scripts in `~/.bin`
