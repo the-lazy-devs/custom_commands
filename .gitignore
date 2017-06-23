@@ -1,3 +1,5 @@
 *.swp
 Vagrantfile
 .vagrant
+*.iml
+.idea
