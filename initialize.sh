@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source cli.sh
+source ./cli.sh
 if [ -z $PROFILE_FILE_LOCATION ]; then
   PROFILE_FILE_LOCATION=$HOME/.bash_profile
 fi
@@ -22,7 +22,7 @@ if [ "$DRY_RUN" = true ]; then
   echo
 fi
 
-source functions.sh
+source ./functions.sh
 create_bin_directory
 update_path_variable $PROFILE_FILE_LOCATION $RC_FILE_LOCATION
 create_symlinks $SCRIPT_DIR_LOCATION
