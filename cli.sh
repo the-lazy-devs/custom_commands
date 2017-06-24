@@ -36,17 +36,27 @@ function print_help() {
 ${PCYAN}Install custom commands and aliases into shell profile files${PRESET}
 
     ${PGREEN}-c${PRESET}, ${PGREEN}--no-color              ${PBLUE}strip color out of the output
+
     ${PGREEN}-d${PRESET}, ${PGREEN}--dry-run               ${PBLUE}don't change anything, show what would be done.
+
     ${PGREEN}-h${PRESET}, ${PGREEN}--help                  ${PBLUE}display this help and exit
+
     ${PGREEN}-p${PRESET}, ${PGREEN}--profile ${PYELLOW}PROFILE_FILE  ${PBLUE}shell profile file to be updated
                                   Default: $HOME/.bash_profile${PRESET}
+
     ${PGREEN}-q${PRESET}, ${PGREEN}--quiet                 ${PBLUE}switches off all output
+
     ${PGREEN}-r${PRESET}, ${PGREEN}--rc ${PYELLOW}STARTUP_FILE       ${PBLUE}shell startup file to be updated
                                   Default: $HOME/.bashrc${PRESET}
+
     ${PGREEN}-s${PRESET}, ${PGREEN}--scripts ${PYELLOW}DIRECTORY     ${PBLUE}alternate parent directory of scripts to be linked
                                   Default: $CURRENT_WORKING_DIRECTORY/scripts${PRESET}
+
     ${PGREEN}-a${PRESET}, ${PGREEN}--aliases ${PYELLOW}DIRECTORY     ${PBLUE}alternate parent directory of aliases to be linked
                                   Default: $CURRENT_WORKING_DIRECTORY/aliases${PRESET}
+
+    ${PGREEN}-b${PRESET}, ${PGREEN}--bin ${PYELLOW}DIRECTORY         ${PBLUE}alternate parent directory of symlinks
+                                  Default: $HOME/.bin${PRESET}
 
 ${PBOLD}Recommended commands${PRESET}:
     ${PCYAN}For bash users${PRESET}: ${PMAGENTA}./${0##*/}${PRESET}
@@ -64,13 +74,14 @@ ${PBOLD}Usage${PRESET}: ${PMAGENTA}$0 ${PRESET}\
 [${PRESET}${PGREEN}-q${PRESET}|${PGREEN}--quiet-mode${PRESET}] \
 [${PRESET}${PGREEN}-r${PRESET}|${PGREEN}--rc ${PYELLOW}file${PRESET}] \
 [${PRESET}${PGREEN}-s${PRESET}|${PGREEN}--scripts ${PYELLOW}directory${PRESET}] \
-[${PRESET}${PGREEN}-a${PRESET}|${PGREEN}--aliases ${PYELLOW}directory${PRESET}]
+[${PRESET}${PGREEN}-a${PRESET}|${PGREEN}--aliases ${PYELLOW}directory${PRESET}] \
+[${PRESET}${PGREEN}-b${PRESET}|${PGREEN}--bin ${PYELLOW}directory${PRESET}]
 EOU
 }
 
 setup_colors
 
-while getopts ":cdhp:qr:s:a:-:" OPT; do
+while getopts ":cdhp:qr:s:a:b:-:" OPT; do
   [[ - == $OPT ]] && OPT=${OPTARG%%=*} OPTARG=${OPTARG#*=}
 
   case $OPT in
@@ -92,6 +103,9 @@ while getopts ":cdhp:qr:s:a:-:" OPT; do
       ;;
     a | aliases)
       ALIAS_DIR_LOCATION=$OPTARG
+      ;;
+    b | bin)
+      BIN_DIR_LOCATION=$OPTARG
       ;;
     \?)
       ARG_NUM=$(($OPTIND - 1))

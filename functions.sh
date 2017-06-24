@@ -1,14 +1,15 @@
 #!/bin/sh
 
 function create_bin_directory() {
-  if [[ -d "$HOME/.bin" ]]; then
-    print "[${PBOLD}No action$PRESET] $PBLUE$HOME/.bin ${PYELLOW}already exists$PRESET"
+  local BIN_DIR_LOCATION=$1
+  if [[ -d "$BIN_DIR_LOCATION" ]]; then
+    print "[${PBOLD}No action$PRESET] $PBLUE$BIN_DIR_LOCATION ${PYELLOW}already exists$PRESET"
   else
     if [ "$DRY_RUN" = true ]; then
-      print "${PYELLOW}Would create $PBLUE$HOME/.bin$PRESET"
+      print "${PYELLOW}Would create $PBLUE$BIN_DIR_LOCATION$PRESET"
     else
-      print "${PGREEN}Creating $PBLUE$HOME/.bin$PRESET"
-      mkdir $HOME/.bin
+      print "${PGREEN}Creating $PBLUE$BIN_DIR_LOCATION$PRESET"
+      mkdir $BIN_DIR_LOCATION
     fi
   fi
 
@@ -16,16 +17,17 @@ function create_bin_directory() {
 }
 
 function update_path_variable() {
-  local DOT_FILES=("${@}")
+  local BIN_DIR_LOCATION=$1
+  local DOT_FILES=("${@:2}")
   for DOT_FILE in ${DOT_FILES[@]}; do
-    if grep -sq '$HOME/.bin' "$DOT_FILE"; then
-      print "[${PBOLD}No action$PRESET] $PBLUE$HOME/.bin ${PYELLOW}already exists in PATH in $PBLUE${DOT_FILE##*/}$PRESET"
+    if grep -sq '$BIN_DIR_LOCATION' "$DOT_FILE"; then
+      print "[${PBOLD}No action$PRESET] $PBLUE$BIN_DIR_LOCATION ${PYELLOW}already exists in PATH in $PBLUE${DOT_FILE##*/}$PRESET"
     else
       if [ "$DRY_RUN" = true ]; then
-        print "${PYELLOW}Would update $PBLUE$DOT_FILE$PYELLOW to add $PBLUE$HOME/.bin$PYELLOW to the PATH variable$PRESET"
+        print "${PYELLOW}Would update $PBLUE$DOT_FILE$PYELLOW to add $PBLUE$BIN_DIR_LOCATION$PYELLOW to the PATH variable$PRESET"
       else
-        print "${PGREEN}Updating ${PBLUE}$DOT_FILE${PGREEN} to add ${PBLUE}$HOME/.bin${PBLUE} to the PATH variable${PRESET}"
-        echo 'export PATH="$PATH:$HOME/.bin"' >>"$DOT_FILE"
+        print "${PGREEN}Updating ${PBLUE}$DOT_FILE${PGREEN} to add ${PBLUE}$BIN_DIR_LOCATION${PBLUE} to the PATH variable${PRESET}"
+        echo 'export PATH="$PATH:$BIN_DIR_LOCATION"' >>"$DOT_FILE"
       fi
     fi
   done
@@ -34,7 +36,8 @@ function update_path_variable() {
 }
 
 function create_symlinks() {
-  local SCRIPT_DIR_LOCATION=$1
+  local BIN_DIR_LOCATION=$1
+  local SCRIPT_DIR_LOCATION=$2
 
   shopt -s nullglob
   local SCRIPTS=$(find "$SCRIPT_DIR_LOCATION" -name '*.sh')
@@ -43,14 +46,14 @@ function create_symlinks() {
     local SCRIPT_FILE_NAME=${FULL_SCRIPT_NAME##*/}
     local SCRIPT=${SCRIPT_FILE_NAME%.*}
 
-    if [[ -L "$HOME/.bin/${SCRIPT}" ]]; then
+    if [[ -L "$BIN_DIR_LOCATION/${SCRIPT}" ]]; then
       print "[${PBOLD}No action$PRESET]$PYELLOW symlink for script $PBLUE$SCRIPT$PYELLOW is already present$PRESET"
     else
       if [ "$DRY_RUN" = true ]; then
         print "${PYELLOW}Would create a symlink for script $PBLUE$SCRIPT$PRESET"
       else
         print "${PGREEN}Creating a symlink for script $PBLUE$SCRIPT$PRESET"
-        ln -s "$SCRIPT_DIR_LOCATION/$SCRIPT_FILE_NAME" "$HOME/.bin/$SCRIPT"
+        ln -s "$SCRIPT_DIR_LOCATION/$SCRIPT_FILE_NAME" "$BIN_DIR_LOCATION/$SCRIPT"
       fi
     fi
   done
