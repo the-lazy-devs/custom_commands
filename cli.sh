@@ -30,6 +30,7 @@ function unset_colors() {
 
 function print_help() {
   print_usage
+  CURRENT_WORKING_DIRECTORY="$(pwd)"
   cat <<EOH
 
 ${PCYAN}Install custom commands and aliases into shell profile files${PRESET}
@@ -42,6 +43,10 @@ ${PCYAN}Install custom commands and aliases into shell profile files${PRESET}
     ${PGREEN}-q${PRESET}, ${PGREEN}--quiet                 ${PBLUE}switches off all output
     ${PGREEN}-r${PRESET}, ${PGREEN}--rc ${PYELLOW}STARTUP_FILE       ${PBLUE}shell startup file to be updated
                                   Default: $HOME/.bashrc${PRESET}
+    ${PGREEN}-s${PRESET}, ${PGREEN}--scripts ${PYELLOW}DIRECTORY     ${PBLUE}alternate parent directory of scripts to be linked
+                                  Default: $CURRENT_WORKING_DIRECTORY/scripts${PRESET}
+    ${PGREEN}-a${PRESET}, ${PGREEN}--aliases ${PYELLOW}DIRECTORY     ${PBLUE}alternate parent directory of aliases to be linked
+                                  Default: $CURRENT_WORKING_DIRECTORY/aliases${PRESET}
 
 ${PBOLD}Recommended commands${PRESET}:
     ${PCYAN}For bash users${PRESET}: ${PMAGENTA}./${0##*/}${PRESET}
@@ -51,13 +56,21 @@ EOH
 
 function print_usage() {
   cat <<EOU
-${PBOLD}Usage${PRESET}: ${PMAGENTA}$0 ${PRESET}[${PRESET}${PGREEN}-c${PRESET}|${PGREEN}--no-color${PRESET}${PBOLD}][${PRESET}${PGREEN}-d${PRESET}|${PGREEN}--dry-run${PRESET}][${PRESET}${PGREEN}-h${PRESET}|${PGREEN}--help${PRESET}][${PRESET}${PGREEN}-p${PRESET}|${PGREEN}--profile ${PYELLOW}file${PRESET}][${PRESET}${PGREEN}-q${PRESET}|${PGREEN}--quiet-mode${PRESET}][${PRESET}${PGREEN}-r${PRESET}|${PGREEN}--rc ${PYELLOW}file${PRESET}]
+${PBOLD}Usage${PRESET}: ${PMAGENTA}$0 ${PRESET}\
+[${PRESET}${PGREEN}-c${PRESET}|${PGREEN}--no-color${PRESET}${PBOLD}] \
+[${PRESET}${PGREEN}-d${PRESET}|${PGREEN}--dry-run${PRESET}] \
+[${PRESET}${PGREEN}-h${PRESET}|${PGREEN}--help${PRESET}] \
+[${PRESET}${PGREEN}-p${PRESET}|${PGREEN}--profile ${PYELLOW}file${PRESET}] \
+[${PRESET}${PGREEN}-q${PRESET}|${PGREEN}--quiet-mode${PRESET}] \
+[${PRESET}${PGREEN}-r${PRESET}|${PGREEN}--rc ${PYELLOW}file${PRESET}] \
+[${PRESET}${PGREEN}-s${PRESET}|${PGREEN}--scripts ${PYELLOW}directory${PRESET}] \
+[${PRESET}${PGREEN}-a${PRESET}|${PGREEN}--aliases ${PYELLOW}directory${PRESET}]
 EOU
 }
 
 setup_colors
 
-while getopts ":cdhp:qr:-:" OPT; do
+while getopts ":cdhp:qr:s:a:-:" OPT; do
   [[ - == $OPT ]] && OPT=${OPTARG%%=*} OPTARG=${OPTARG#*=}
 
   case $OPT in
@@ -73,6 +86,12 @@ while getopts ":cdhp:qr:-:" OPT; do
     q | quiet) QUIET=true ;;
     r | rc)
       RC_FILE_LOCATION=$OPTARG
+      ;;
+    s | scripts)
+      SCRIPT_DIR_LOCATION=$OPTARG
+      ;;
+    a | aliases)
+      ALIAS_DIR_LOCATION=$OPTARG
       ;;
     \?)
       ARG_NUM=$(($OPTIND - 1))
