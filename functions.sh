@@ -20,7 +20,7 @@ function update_path_variable() {
   local BIN_DIR_LOCATION=$1
   local DOT_FILES=("${@:2}")
   for DOT_FILE in ${DOT_FILES[@]}; do
-    if grep -sq '$BIN_DIR_LOCATION' "$DOT_FILE"; then
+    if grep -sq "$BIN_DIR_LOCATION" "$DOT_FILE"; then
       print "[${PBOLD}No action$PRESET] $PBLUE$BIN_DIR_LOCATION ${PYELLOW}already exists in PATH in $PBLUE${DOT_FILE##*/}$PRESET"
     else
       if [ "$DRY_RUN" = true ]; then
