@@ -27,7 +27,7 @@ function update_path_variable() {
         print "${PYELLOW}Would update $PBLUE$DOT_FILE$PYELLOW to add $PBLUE$BIN_DIR_LOCATION$PYELLOW to the PATH variable$PRESET"
       else
         print "${PGREEN}Updating ${PBLUE}$DOT_FILE${PGREEN} to add ${PBLUE}$BIN_DIR_LOCATION${PBLUE} to the PATH variable${PRESET}"
-        echo 'export PATH=$PATH:'$BIN_DIR_LOCATION >> "$DOT_FILE"
+        printf 'export PATH=$PATH:'$BIN_DIR_LOCATION >> "$DOT_FILE"
       fi
     fi
   done
