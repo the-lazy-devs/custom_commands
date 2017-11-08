@@ -40,7 +40,7 @@ function create_symlinks() {
   local SCRIPT_DIR_LOCATION=$2
 
   shopt -s nullglob
-  local SCRIPTS=$(find "$SCRIPT_DIR_LOCATION" -name '*.sh')
+  local SCRIPTS=$(find "$SCRIPT_DIR_LOCATION" -name '*.sh' 2> /dev/null)
   shopt -u nullglob
   for FULL_SCRIPT_NAME in ${SCRIPTS[@]}; do
     local SCRIPT_FILE_NAME=${FULL_SCRIPT_NAME##*/}
@@ -70,7 +70,7 @@ function update_alias_sourcing() {
   local PROFILE_FILE_LOCATION=$2
 
   shopt -s nullglob
-  local ALIAS_FILES=$(find "$ALIAS_DIR_LOCATION" -name '*.sh')
+  local ALIAS_FILES=$(find "$ALIAS_DIR_LOCATION" -name '*.sh' 2> /dev/null)
   shopt -u nullglob
   for ALIAS_FILE in ${ALIAS_FILES[@]}; do
     local ALIAS_FILE_NAME=${ALIAS_FILE##*/}
