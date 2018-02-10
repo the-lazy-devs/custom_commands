@@ -3,18 +3,27 @@ It works for me.
 You are encouraged to use it in a way that works for *you*.  
 -- spargonaut
 
+------
+tl;dr  
+.custom_commands will create a directoruy to hold symlinks, add that directory to your path variable, and create symlinks in that directory which point to your own custom scripts.  It makes them available to you on your CLI as the name of the script without the suffix ```.sh```  
+checkout the initialize.sh script to get started
+
+-----
+
+### Example
+
 On each of my workstations, I have cloned this repository.  
 ```  
-git clone https://github.com/spargonaut/.custom_commands  
+git clone https://github.com/the-lazy-devs/.custom_commands.git
 ```  
 
-On each workstation, I also have at least one other repository, each containing shortcut scripts  
+On each workstation, I also have at least one other repository, each containing shortcut scripts.  
 my generic, public scripts can be found at https://github.com/spargonaut/myScripts  
 ```  
 git clone https://github.com/spargonaut/myScripts  
 ```  
-
-for the sake of this write up, lets say I cloned both repositories to my home directory, so when I do an 'ls -a', I get something like this....  
+for the sake of this write up, lets say I cloned both repositories to my home directory,  
+so when I do an ```ls -a```, I get something like this....   
 ```  
 .  
 ..  
@@ -22,14 +31,13 @@ for the sake of this write up, lets say I cloned both repositories to my home di
 myScripts  
 ```  
 
-
-To create my symlinks, I usually follow this process....  
-navigate to the .custom_commands directory...  
+To create my symlinks, I usually follow this process:  
+- navigate to the .custom_commands directory...   
 ```  
 cd ~/.custom_commands  
 ```  
 
-Execute the 'initialize.sh' script in dry-run mode, so I can see what its doing  
+I'll execute the 'initialize.sh' script in dry-run mode, so I can see what its doing.  
 I need to set a couple of flags on the command to do this.  
 I use '-s <path_name>' to point to my custom scripts  
 and I use '-d' to execute it in dry-run mode  
