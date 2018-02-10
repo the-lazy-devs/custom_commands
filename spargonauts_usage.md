@@ -5,7 +5,7 @@ You are encouraged to use it in a way that works for *you*.
 
 ------
 tl;dr  
-.custom_commands will create a directoruy to hold symlinks, add that directory to your path variable, and create symlinks in that directory which point to your own custom scripts.  It makes them available to you on your CLI as the name of the script without the suffix ```.sh```  
+.custom_commands will create a directory to hold symlinks, add that directory to your path variable, and create symlinks in that directory which point to your own custom scripts.  It makes them available to you on your CLI as the name of the script without the suffix ```.sh```  
 checkout the initialize.sh script to get started
 
 -----
