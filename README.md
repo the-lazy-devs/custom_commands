@@ -6,7 +6,7 @@ Usage
 -------------------
 
 It is _recommended_ that you check out the code with the following command:
-`git clone https://github.com/spargonaut/.custom_commands.git ~/.custom_commands`
+`git clone https://github.com/spargonaut/custom_commands.git ~/.custom_commands`
 
 The project adds aliases to be sourced and updates the path in a file(s) loaded by your shell.
 By default, the `~/.bash_profile` and `~/.bashrc` are updated.
