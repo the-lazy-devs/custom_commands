@@ -6,15 +6,16 @@ Usage
 -------------------
 
 It is _recommended_ that you check out the code with the following command:
-`git clone https://github.com/spargonaut/custom_commands.git ~/.custom_commands`
+`git clone https://github.com/the-lazy-devs/custom_commands.git ~/.custom_commands`
+
 
 The project adds aliases to be sourced and updates the path in a file(s) loaded by your shell.
 By default, the `~/.bash_profile` and `~/.bashrc` are updated.
 
-If you're using bash and you would like this file updated, run `./initialize.sh`.
-If you're using zsh, you should run `./initialize.sh -p ~/.zshrc -r ~/.zshrc`.
+If you're using bash and you would like this file updated, run `./create_custom_commands.sh`.
+If you're using zsh, you should run `./create_custom_commands.sh -p ~/.zshrc -r ~/.zshrc`.
 
-For help, run `./initialize.sh -h`
+For help, run `./create_custom_commands.sh -h`
 
 Script will ensure that no changes are made to files unless required.
 ![execution output](https://cloud.githubusercontent.com/assets/911203/19718088/7665f90c-9b81-11e6-8fd8-3fbd815e583b.png)
