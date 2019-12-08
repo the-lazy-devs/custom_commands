@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 function create_bin_directory() {
   local BIN_DIR_LOCATION=$1
