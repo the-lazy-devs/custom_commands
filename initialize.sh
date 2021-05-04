@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 printf "\n\n"
 printf "*****  DEPRECATED  *****\n"

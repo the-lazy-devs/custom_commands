@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 source ./cli.sh
 if [ -z $PROFILE_FILE_LOCATION ]; then
