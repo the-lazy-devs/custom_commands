@@ -19,7 +19,7 @@ if [ -z $ALIAS_DIR_LOCATION ]; then
 fi
 
 if [ -z $BIN_DIR_LOCATION ]; then
-  BIN_DIR_LOCATION=$HOME/.bin
+  BIN_DIR_LOCATION=$HOME/.ccsl
 fi
 
 if [ "$DRY_RUN" = true ]; then

@@ -22,6 +22,7 @@ function update_path_variable() {
   for DOT_FILE in ${DOT_FILES[@]}; do
     if grep -sq "$BIN_DIR_LOCATION" "$DOT_FILE"; then
       printv "[${PBOLD}No action$PRESET] $PBLUE$BIN_DIR_LOCATION ${PYELLOW}already exists in PATH in $PBLUE${DOT_FILE##*/}$PRESET"
+      echo "The directory containing this readme is created and used by the custom_commands application" > $BIN_DIR_LOCATION/readme.txt
     else
       if [ "$DRY_RUN" = true ]; then
         print "${PYELLOW}Would update $PBLUE$DOT_FILE$PYELLOW to add $PBLUE$BIN_DIR_LOCATION$PYELLOW to the PATH variable$PRESET"
