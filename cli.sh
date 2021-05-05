@@ -35,6 +35,10 @@ function print_help() {
 
 ${PCYAN}Install custom commands and aliases into shell profile files${PRESET}
 
+    ${PGREEN}-v${PRESET}, ${PGREEN}--verbose               ${PBLUE}display more information when executing
+
+    ${PGREEN}-q${PRESET}, ${PGREEN}--quiet                 ${PBLUE}switches off all output
+
     ${PGREEN}-c${PRESET}, ${PGREEN}--no-color              ${PBLUE}strip color out of the output
 
     ${PGREEN}-d${PRESET}, ${PGREEN}--dry-run               ${PBLUE}don't change anything, show what would be done.
@@ -43,8 +47,6 @@ ${PCYAN}Install custom commands and aliases into shell profile files${PRESET}
 
     ${PGREEN}-p${PRESET}, ${PGREEN}--profile ${PYELLOW}PROFILE_FILE  ${PBLUE}shell profile file to be updated
                                   Default: $HOME/.bash_profile${PRESET}
-
-    ${PGREEN}-q${PRESET}, ${PGREEN}--quiet                 ${PBLUE}switches off all output
 
     ${PGREEN}-r${PRESET}, ${PGREEN}--rc ${PYELLOW}STARTUP_FILE       ${PBLUE}shell startup file to be updated
                                   Default: $HOME/.bashrc${PRESET}
@@ -67,11 +69,12 @@ EOH
 function print_usage() {
   cat <<EOU
 ${PBOLD}Usage${PRESET}: ${PMAGENTA}$0 ${PRESET}\
+[${PRESET}${PGREEN}-v${PRESET}|${PGREEN}--verbose${PRESET}${PBOLD}] \
+[${PRESET}${PGREEN}-q${PRESET}|${PGREEN}--quiet-mode${PRESET}] \
 [${PRESET}${PGREEN}-c${PRESET}|${PGREEN}--no-color${PRESET}${PBOLD}] \
 [${PRESET}${PGREEN}-d${PRESET}|${PGREEN}--dry-run${PRESET}] \
 [${PRESET}${PGREEN}-h${PRESET}|${PGREEN}--help${PRESET}] \
 [${PRESET}${PGREEN}-p${PRESET}|${PGREEN}--profile ${PYELLOW}file${PRESET}] \
-[${PRESET}${PGREEN}-q${PRESET}|${PGREEN}--quiet-mode${PRESET}] \
 [${PRESET}${PGREEN}-r${PRESET}|${PGREEN}--rc ${PYELLOW}file${PRESET}] \
 [${PRESET}${PGREEN}-s${PRESET}|${PGREEN}--scripts ${PYELLOW}directory${PRESET}] \
 [${PRESET}${PGREEN}-a${PRESET}|${PGREEN}--aliases ${PYELLOW}directory${PRESET}] \
@@ -81,10 +84,11 @@ EOU
 
 setup_colors
 
-while getopts ":cdhp:qr:s:a:b:-:" OPT; do
+while getopts ":vcdhp:qr:s:a:b:-:" OPT; do
   [[ - == $OPT ]] && OPT=${OPTARG%%=*} OPTARG=${OPTARG#*=}
 
   case $OPT in
+    v | verbose) VERBOSE=true ;;
     c | no-color) NO_COLOR=true ;;
     d | dry-run) DRY_RUN=true ;;
     h | help)

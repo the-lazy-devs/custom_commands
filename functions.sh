@@ -42,12 +42,15 @@ function create_symlinks() {
   shopt -s nullglob
   local SCRIPTS=$(find "$SCRIPT_DIR_LOCATION" -name '*.sh' 2> /dev/null)
   shopt -u nullglob
+
   for FULL_SCRIPT_NAME in ${SCRIPTS[@]}; do
     local SCRIPT_FILE_NAME=${FULL_SCRIPT_NAME##*/}
     local SCRIPT=${SCRIPT_FILE_NAME%.*}
 
     if [[ -L "$BIN_DIR_LOCATION/${SCRIPT}" ]]; then
-      print "[${PBOLD}No action$PRESET]$PYELLOW symlink for script $PBLUE$SCRIPT$PYELLOW is already present$PRESET"
+      if [[ $VERBOSE ]]; then
+        print "[${PBOLD}No action$PRESET]$PYELLOW symlink for script $PBLUE$SCRIPT$PYELLOW is already present$PRESET"
+      fi
     else
       if [ "$DRY_RUN" = true ]; then
         print "${PYELLOW}Would create a symlink for script $PBLUE$SCRIPT$PRESET"
