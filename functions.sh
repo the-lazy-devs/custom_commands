@@ -48,9 +48,7 @@ function create_symlinks() {
     local SCRIPT=${SCRIPT_FILE_NAME%.*}
 
     if [[ -L "$BIN_DIR_LOCATION/${SCRIPT}" ]]; then
-      if [[ $VERBOSE ]]; then
-        print "[${PBOLD}No action$PRESET]$PYELLOW symlink for script $PBLUE$SCRIPT$PYELLOW is already present$PRESET"
-      fi
+        printv "[${PBOLD}No action$PRESET]$PYELLOW symlink for script $PBLUE$SCRIPT$PYELLOW is already present$PRESET"
     else
       if [ "$DRY_RUN" = true ]; then
         print "${PYELLOW}Would create a symlink for script $PBLUE$SCRIPT$PRESET"
@@ -96,6 +94,12 @@ function update_alias_sourcing() {
   fi
 
   print
+}
+
+function printv() {
+  if [[ $VERBOSE ]]; then
+    print "$1"
+  fi
 }
 
 function print() {
