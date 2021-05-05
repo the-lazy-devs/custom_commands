@@ -3,7 +3,7 @@
 function create_bin_directory() {
   local BIN_DIR_LOCATION=$1
   if [[ -d "$BIN_DIR_LOCATION" ]]; then
-    print "[${PBOLD}No action$PRESET] $PBLUE$BIN_DIR_LOCATION ${PYELLOW}already exists$PRESET"
+    printv "[${PBOLD}No action$PRESET] $PBLUE$BIN_DIR_LOCATION ${PYELLOW}already exists$PRESET"
   else
     if [ "$DRY_RUN" = true ]; then
       print "${PYELLOW}Would create $PBLUE$BIN_DIR_LOCATION$PRESET"
@@ -21,7 +21,7 @@ function update_path_variable() {
   local DOT_FILES=("${@:2}")
   for DOT_FILE in ${DOT_FILES[@]}; do
     if grep -sq "$BIN_DIR_LOCATION" "$DOT_FILE"; then
-      print "[${PBOLD}No action$PRESET] $PBLUE$BIN_DIR_LOCATION ${PYELLOW}already exists in PATH in $PBLUE${DOT_FILE##*/}$PRESET"
+      printv "[${PBOLD}No action$PRESET] $PBLUE$BIN_DIR_LOCATION ${PYELLOW}already exists in PATH in $PBLUE${DOT_FILE##*/}$PRESET"
     else
       if [ "$DRY_RUN" = true ]; then
         print "${PYELLOW}Would update $PBLUE$DOT_FILE$PYELLOW to add $PBLUE$BIN_DIR_LOCATION$PYELLOW to the PATH variable$PRESET"
@@ -60,7 +60,7 @@ function create_symlinks() {
   done
 
   if [[ -z ${SCRIPTS[@]} ]]; then
-    print "[${PBOLD}Warning$PRESET]$PYELLOW No scripts found$PRESET"
+    printv "[${PBOLD}Warning$PRESET]$PYELLOW No scripts found$PRESET"
   fi
 
   print
@@ -73,6 +73,7 @@ function update_alias_sourcing() {
   shopt -s nullglob
   local ALIAS_FILES=$(find "$ALIAS_DIR_LOCATION" -name '*.sh' 2> /dev/null)
   shopt -u nullglob
+
   for ALIAS_FILE in ${ALIAS_FILES[@]}; do
     local ALIAS_FILE_NAME=${ALIAS_FILE##*/}
     local PROFILE_FILE_NAME=${PROFILE_FILE_LOCATION##*/}
@@ -90,7 +91,7 @@ function update_alias_sourcing() {
   done
 
   if [[ -z ${ALIAS_FILES[@]} ]]; then
-    print "[${PBOLD}Warning$PRESET]$PYELLOW No aliases found$PRESET"
+    printv "[${PBOLD}Warning$PRESET]$PYELLOW No aliases found$PRESET"
   fi
 
   print
