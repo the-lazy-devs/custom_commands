@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source ./cli.sh
+source ./src/cli.sh
+
 if [ -z $PROFILE_FILE_LOCATION ]; then
   PROFILE_FILE_LOCATION=$HOME/.bash_profile
 fi
@@ -32,7 +33,8 @@ if [ "$DRY_RUN" = true ]; then
   echo
 fi
 
-source ./functions.sh
+source ./src/functions.sh
+
 create_bin_directory $BIN_DIR_LOCATION
 update_path_variable $BIN_DIR_LOCATION $PROFILE_FILE_LOCATION $RC_FILE_LOCATION
 create_symlinks $BIN_DIR_LOCATION $SCRIPT_DIR_LOCATION
